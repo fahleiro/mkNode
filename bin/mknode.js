@@ -23,7 +23,6 @@ app.get('*.md', (req, res) => {
 
 app.use(express.static(docsPath));
 
-// Roteador para a página inicial
 app.get('/', (req, res) => {
   const indexPath = path.join(docsPath, 'index.md');
   fs.readFile(indexPath, 'utf8', (err, data) => {
