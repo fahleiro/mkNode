@@ -1,0 +1,29 @@
+{
+  "name": "mknode",
+  "version": "1.0.0",
+  "description": "A tool to serve Markdown documentation",
+  "main": "./bin/mknode.js",
+  "bin": {
+    "mknode": "bin/mknode.js"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "node bin/mknode.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fahleiro/mkNode.git"
+  },
+  "author": "Gabriel Faleiro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fahleiro/mkNode/issues"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "marked": "^4.0.0"
+  },
+  "homepage": "https://github.com/fahleiro/mkNode#readme"
+}
