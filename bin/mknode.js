@@ -25,7 +25,7 @@ function generateMenuHtml(menu) {
       if (typeof value === 'object') {
         html += `
           <li class="menu-item">
-            <span class="menu-toggle" data-depth="${depth}">${key}</span>
+            <span class="menu-toggle" data-depth="${depth}" data-fulltext="${key}">${key}</span>
             ${buildMenu(value, depth + 1)}
           </li>
         `;
@@ -118,10 +118,22 @@ app.get('*.md', (req, res) => {
             background-color: #4a6a91;
             border-radius: 5px;
             margin: 0;
+            overflow: hidden; /* Impede o texto de ultrapassar o contêiner */
+            text-overflow: ellipsis; /* Adiciona '...' no final do texto cortado */
+            white-space: nowrap; /* Impede que o texto quebre em várias linhas */
           }
-          .menu-toggle:hover {
-            background-color: #4a6a91;
+          .menu-toggle:hover::after {
+            content: attr(data-fulltext); /* Mostra o texto completo no tooltip */
+            position: absolute;
+            left: 100%;
+            white-space: nowrap;
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
             border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: block;
           }
           .content {
             margin-left: 220px;
@@ -140,6 +152,7 @@ app.get('*.md', (req, res) => {
           document.addEventListener('DOMContentLoaded', () => {
             const toggles = document.querySelectorAll('.menu-toggle');
             toggles.forEach(toggle => {
+              toggle.setAttribute('data-fulltext', toggle.textContent);
               toggle.addEventListener('click', () => {
                 const parentLi = toggle.parentElement;
                 parentLi.classList.toggle('active');
@@ -229,10 +242,22 @@ app.get('/', (req, res) => {
             background-color: #4a6a91;
             border-radius: 5px;
             margin: 0;
+            overflow: hidden; /* Impede o texto de ultrapassar o contêiner */
+            text-overflow: ellipsis; /* Adiciona '...' no final do texto cortado */
+            white-space: nowrap; /* Impede que o texto quebre em várias linhas */
           }
-          .menu-toggle:hover {
-            background-color: #4a6a91;
+          .menu-toggle:hover::after {
+            content: attr(data-fulltext); /* Mostra o texto completo no tooltip */
+            position: absolute;
+            left: 100%;
+            white-space: nowrap;
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
             border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: block;
           }
           .content {
             margin-left: 220px;
@@ -251,6 +276,7 @@ app.get('/', (req, res) => {
           document.addEventListener('DOMContentLoaded', () => {
             const toggles = document.querySelectorAll('.menu-toggle');
             toggles.forEach(toggle => {
+              toggle.setAttribute('data-fulltext', toggle.textContent);
               toggle.addEventListener('click', () => {
                 const parentLi = toggle.parentElement;
                 parentLi.classList.toggle('active');
