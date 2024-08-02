@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -7,8 +9,21 @@ const app = express();
 const port = 3000;
 const docsPath = path.resolve(process.cwd(), 'docs');
 
+app.get('*.md', (req, res) => {
+  const filePath = path.join(docsPath, req.path);
+
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      res.status(500).send('Error reading file');
+      return;
+    }
+    res.send(marked(data));
+  });
+});
+
 app.use(express.static(docsPath));
 
+// Roteador para a página inicial
 app.get('/', (req, res) => {
   const indexPath = path.join(docsPath, 'index.md');
   fs.readFile(indexPath, 'utf8', (err, data) => {
