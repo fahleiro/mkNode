@@ -17,8 +17,9 @@ const scripts = require('../lib/scripts');
 const app = express();
 const port = 3000;
 const docsPath = path.resolve(process.cwd(), 'docs');
+const fontStyles = getFontConfig(); // Obtém o CSS da fonte
 const menuConfig = readMenuConfig();
-const pageTitle = "DocName"; // Defina o título fixo aqui
+const pageTitle = "Seu Título Fixo"; // Defina o título fixo aqui
 
 // Middleware para converter e servir arquivos Markdown
 app.get('*.md', (req, res) => {
@@ -37,6 +38,7 @@ app.get('*.md', (req, res) => {
         <title>${pageTitle}</title>
         <style>
           ${styles}
+          ${fontStyles}
         </style>
       </head>
       <body>
@@ -74,6 +76,7 @@ app.get('/', (req, res) => {
         <title>${pageTitle}</title>
         <style>
           ${styles}
+          ${fontStyles}
         </style>
       </head>
       <body>
