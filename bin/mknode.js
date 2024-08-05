@@ -12,15 +12,13 @@ const getFontConfig = require('../lib/getFontConfig');
 const readMenuConfig = require('../lib/readMenuConfig');
 const generateMenuHtml = require('../lib/generateMenuHtml');
 const styles = require('../lib/styles'); // Importa o CSS
-const scripts = require('../lib/scripts'); // Importa o JavaScript
+const scripts = require('../lib/scripts');
 
 const app = express();
 const port = 3000;
 const docsPath = path.resolve(process.cwd(), 'docs');
 const font = getFontConfig();
 const menuConfig = readMenuConfig();
-
-
 
 // Middleware para converter e servir arquivos Markdown
 app.get('*.md', (req, res) => {
@@ -45,6 +43,7 @@ app.get('*.md', (req, res) => {
           ${generateMenuHtml(menuConfig)}
         </nav>
         <div class="content">
+          <div class="breadcrumbs">Home > ${req.path.replace('.md', '')}</div>
           ${html}
         </div>
         <script>
@@ -80,6 +79,7 @@ app.get('/', (req, res) => {
           ${generateMenuHtml(menuConfig)}
         </nav>
         <div class="content">
+          <div class="breadcrumbs">Home</div>
           ${html}
         </div>
         <script>
