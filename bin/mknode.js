@@ -46,7 +46,6 @@ app.get('*.md', (req, res) => {
           ${generateMenuHtml(menuConfig)}
         </nav>
         <div class="content">
-          <div class="breadcrumbs">Home > ${req.path.replace('.md', '')}</div>
           ${html}
         </div>
         <script>
@@ -84,7 +83,6 @@ app.get('/', (req, res) => {
           ${generateMenuHtml(menuConfig)}
         </nav>
         <div class="content">
-          <div class="breadcrumbs">Home</div>
           ${html}
         </div>
         <script>
