@@ -9,6 +9,7 @@ const process = require('process');
 // Importa funções de lib
 const initializeProject = require('../lib/initializeProject');
 const getFontConfig = require('../lib/getFontConfig');
+const getPageTitleConfig = require('../lib/getPageTitleConfig');
 const readMenuConfig = require('../lib/readMenuConfig');
 const generateMenuHtml = require('../lib/generateMenuHtml');
 const styles = require('../lib/styles'); // Importa o CSS
@@ -18,8 +19,8 @@ const app = express();
 const port = 3000;
 const docsPath = path.resolve(process.cwd(), 'docs');
 const fontStyles = getFontConfig(); // Obtém o CSS da fonte
+const pageTitle = getPageTitleConfig(); // Define title
 const menuConfig = readMenuConfig();
-const pageTitle = "Seu Título Fixo"; // Defina o título fixo aqui
 
 // Middleware para converter e servir arquivos Markdown
 app.get('*.md', (req, res) => {
@@ -35,7 +36,7 @@ app.get('*.md', (req, res) => {
     res.send(`
       <html>
       <head>
-        <title>${pageTitle}</title>
+        ${pageTitle}
         <style>
           ${styles}
           ${fontStyles}
@@ -72,7 +73,7 @@ app.get('/', (req, res) => {
     res.send(`
       <html>
       <head>
-        <title>${pageTitle}</title>
+        ${pageTitle}
         <style>
           ${styles}
           ${fontStyles}
