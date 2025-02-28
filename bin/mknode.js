@@ -13,6 +13,7 @@ const getPageTitleConfig = require('../lib/getPageTitleConfig');
 const readMenuConfig = require('../lib/readMenuConfig');
 const generateMenuHtml = require('../lib/generateMenuHtml');
 const styles = require('../lib/styles'); // Importa o CSS
+const getGoogleAdsenseScript = require('../lib/getGoogleAdsenseScript'); // Importa o CSS
 const scripts = require('../lib/scripts');
 
 const app = express();
@@ -22,39 +23,44 @@ const fontStyles = getFontConfig(); // Obtém o CSS da fonte
 const pageTitle = getPageTitleConfig(); // Define title
 const menuConfig = readMenuConfig();
 
+// Função para gerar o HTML da página
+function generateHtml(content) {
+  return `
+<html>
+<head>
+${pageTitle}
+${getGoogleAdsenseScript}
+<style>
+${styles}
+${fontStyles}
+</style>
+</head>
+<body>
+<nav>
+${generateMenuHtml(menuConfig)}
+</nav>
+<div class="content">
+${content}
+</div>
+<script>
+${scripts}
+</script>
+</body>
+</html>
+`;
+}
+
 // Middleware para converter e servir arquivos Markdown
 app.get('*.md', (req, res) => {
   const filePath = path.join(docsPath, req.path);
 
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
-      res.status(500).send('Error reading file');
+      res.status(404).send('File not found');
       return;
     }
-    // Aplica a fonte ao HTML gerado
-    const html = marked(data);
-    res.send(`
-      <html>
-      <head>
-        ${pageTitle}
-        <style>
-          ${styles}
-          ${fontStyles}
-        </style>
-      </head>
-      <body>
-        <nav>
-          ${generateMenuHtml(menuConfig)}
-        </nav>
-        <div class="content">
-          ${html}
-        </div>
-        <script>
-          ${scripts}
-        </script>
-      </body>
-      </html>
-    `);
+    const htmlContent = marked(data);
+    res.send(generateHtml(htmlContent));
   });
 });
 
@@ -66,32 +72,11 @@ app.get('/', (req, res) => {
   const indexPath = path.join(docsPath, 'index.md');
   fs.readFile(indexPath, 'utf8', (err, data) => {
     if (err) {
-      res.status(500).send('Error reading index.md');
+      res.status(404).send('index.md not found');
       return;
     }
-    const html = marked(data);
-    res.send(`
-      <html>
-      <head>
-        ${pageTitle}
-        <style>
-          ${styles}
-          ${fontStyles}
-        </style>
-      </head>
-      <body>
-        <nav>
-          ${generateMenuHtml(menuConfig)}
-        </nav>
-        <div class="content">
-          ${html}
-        </div>
-        <script>
-          ${scripts}
-        </script>
-      </body>
-      </html>
-    `);
+    const htmlContent = marked(data);
+    res.send(generateHtml(htmlContent));
   });
 });
 
