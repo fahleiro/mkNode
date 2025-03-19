@@ -1,6 +1,6 @@
 {
   "name": "mknode",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "Node package self-hosted documentation using markdown language",
   "main": "./bin/mknode.js",
   "bin": {

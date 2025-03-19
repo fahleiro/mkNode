@@ -1,7 +1,7 @@
 # mkNode
 _Node package self-hosted documentation using markdown language_
 
-# Production examploe
+# Production example
 https://mknode-faleiroqa.onrender.com/
 
 # How to use

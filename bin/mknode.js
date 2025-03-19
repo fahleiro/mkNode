@@ -13,7 +13,6 @@ const getPageTitleConfig = require('../lib/getPageTitleConfig');
 const readMenuConfig = require('../lib/readMenuConfig');
 const generateMenuHtml = require('../lib/generateMenuHtml');
 const styles = require('../lib/styles'); // Importa o CSS
-const getGoogleAdsenseScript = require('../lib/getGoogleAdsenseScript'); // Importa o CSS
 const scripts = require('../lib/scripts');
 
 const app = express();
@@ -46,7 +45,6 @@ function generateHtml(content) {
   hljs.highlightAll();
 </script>
 ${pageTitle}
-${getGoogleAdsenseScript}
 <style>
 ${styles}
 ${fontStyles}
